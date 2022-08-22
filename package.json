@@ -1,0 +1,45 @@
+{
+  "name": "vite-ionic-ts",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "android": "vite build && npx cap sync android && npx cap open android",
+    "android:release": "vite build && npx cap sync android && cd android && gradlew assembleRelease && npm run sign",
+    "sign": "cd android/app/build/outputs/apk/release && jarsigner -keystore android/solamh.keystore -storepass 123456 app-release-unsigned.apk sola-h5 -signedjar android/app-release.apk"
+  },
+  "dependencies": {
+    "@capacitor/android": "^3.6.0",
+    "@capacitor/app": "^1.1.1",
+    "@capacitor/core": "^3.6.0",
+    "@capacitor/status-bar": "^1.0.8",
+    "@ionic/core": "^6.1.13",
+    "@ionic/vue": "^6.1.13",
+    "@ionic/vue-router": "^6.1.13",
+    "axios": "^0.27.2",
+    "moment": "^2.29.4",
+    "ts-md5": "^1.2.11",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^3.6.0",
+    "@types/node": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.2.0",
+    "less": "^4.1.3",
+    "less-loader": "^11.0.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.5.4",
+    "vconsole": "^3.14.6",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
+  }
+}
