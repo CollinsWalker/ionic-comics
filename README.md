@@ -7,8 +7,8 @@ java 环境建议百度: "cordova 打包环境配置"
 在项目根目录添加三个文件: .env, .env.development, .env.production, 填入内容
 
 ```
-VITE_APP_URL=http://mh.helloworlds.xyz/app.php
-VITE_APP_KEY=qwezxc
+VITE_APP_URL=域名/app.php
+VITE_APP_KEY=app密钥
 ```
 
 目前仅支持打包: Android ~~IOS~~
