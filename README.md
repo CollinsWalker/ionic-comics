@@ -27,6 +27,12 @@ npm run dev
 
 ### 打包命令
 
+如果目录没有'android'目录，请在根目录终端使用
+
+```
+ionic capacitor add android
+```
+
 使用 Android Studio 打包命令，**推荐**
 
 ```
