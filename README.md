@@ -11,6 +11,15 @@ VITE_APP_URL=域名/app.php
 VITE_APP_KEY=app密钥
 ```
 
+修改 capacitor.config.ts 文件里的内容
+
+```
+...
+appId: 'applicationId',
+appName: 'App名称',
+...
+```
+
 目前仅支持打包: Android ~~IOS~~
 
 ### 安装依赖
@@ -30,7 +39,7 @@ npm run dev
 如果目录没有'android'目录，请在根目录终端使用
 
 ```
-ionic capacitor add android
+npx cap add android
 ```
 
 使用 Android Studio 打包命令，**推荐**
