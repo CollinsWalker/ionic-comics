@@ -11,7 +11,7 @@ const toastShow = async (message: string, color: string) => {
     message,
     duration: 3000,
     color,
-    position: 'bottom'
+    position: 'top'
   })
   return toast.present()
 }

@@ -45,7 +45,7 @@ npx cap add android
 使用 Android Studio 打包命令，**推荐**
 
 ```
-npm run build:android
+npm run build:release
 ```
 
 没有 AS 打包命令(需要提前申请好密钥，签名 App 需要)使用此命令会自动签名 App，需要把密钥放到"android"目录。这个会导致 Android 版本高出现解析包错误，自测

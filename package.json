@@ -7,7 +7,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "build:sit": "vite build --mode sit && npx cap sync android && npx cap open android",
-    "build:android": "vite build && npx cap sync android && npx cap open android",
+    "build:release": "vite build && npx cap sync android && npx cap open android",
     "android:release": "vite build && npx cap sync android && cd android && gradlew assembleRelease && npm run sign",
     "sign": "cd android/app/build/outputs/apk/release && jarsigner -keystore android/solamh.keystore -storepass 123456 app-release-unsigned.apk sola-h5 -signedjar android/app-release.apk"
   },
