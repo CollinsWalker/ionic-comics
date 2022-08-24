@@ -54,7 +54,7 @@ npm run build:android
 npm run android:release
 ```
 
-如果打包界面有问题可以选择，此命令打包成debug版本(待测试)
+如果打包界面有问题可以选择，此命令打包成debug版本
 ```
 npm run build:sit
 ```

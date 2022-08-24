@@ -20,6 +20,8 @@
     setStatusBarStyleLight()
   }
 
+  console.log(process.env.NODE_ENV, '当前环境')
+
   const ionRouter = useIonRouter()
   const router = useRouter()
   const route = useRoute()

@@ -9,17 +9,17 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
   console.log(env, 'env')
   console.log(command, 'command')
-  console.log(mode, 'command')
+  console.log(mode, 'mode')
   console.log('=======================')
-  console.log(process.env.NODE_ENV, '环境')
+  console.log(mode, '环境')
   return {
     plugins: [
       vue(),
       // VConsole 调试工具配置，若没有此配置，则调试工具控制台不会打印日志
       viteVConsole({
         entry: [path.resolve('src/main.ts')], // 每个页面的入口文件，和上面不一样的地方，这里是一个数组
-        localEnabled: mode === 'sit', // 本地是否启用
-        enabled: true, // 是否启用
+        localEnabled: false, // 本地是否启用
+        enabled: mode === 'sit', // 是否启用
         config: {
           maxLogNumber: 1000,
           theme: 'light' // 主题颜色
@@ -48,8 +48,8 @@ export default defineConfig(({ command, mode }) => {
       terserOptions: {
         compress: {
           // 生产环境去除打包以及debugger
-          drop_debugger: true,
-          drop_console: true
+          // drop_debugger: true,
+          // drop_console: true
         }
       }
     }
