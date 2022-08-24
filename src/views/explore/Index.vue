@@ -281,6 +281,7 @@
     .tag-list {
       font-size: 12px;
       display: flex;
+      margin-bottom: 8px;
       .tag-title {
         margin-right: 8px;
       }
@@ -291,7 +292,6 @@
         .t-item {
           // width: 20%;
           min-width: 24px;
-          margin-bottom: 8px;
           margin-right: 12px;
           &.active {
             color: #3880ff;

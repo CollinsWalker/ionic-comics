@@ -7,11 +7,7 @@ import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
-  console.log(env, 'env')
   console.log(command, 'command')
-  console.log(mode, 'mode')
-  console.log('=======================')
-  console.log(mode, '环境')
   return {
     plugins: [
       vue(),
@@ -44,14 +40,14 @@ export default defineConfig(({ command, mode }) => {
         }
       }
     },
-    build: {
-      terserOptions: {
-        compress: {
-          // 生产环境去除打包以及debugger
-          // drop_debugger: true,
-          // drop_console: true
-        }
-      }
-    }
+    // build: {
+    //   terserOptions: {
+    //     compress: {
+    //       // 生产环境去除打包以及debugger
+    //       drop_debugger: true,
+    //       drop_console: true
+    //     }
+    //   }
+    // }
   }
 })

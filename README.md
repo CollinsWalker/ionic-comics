@@ -58,3 +58,19 @@ npm run android:release
 ```
 npm run build:sit
 ```
+
+### 注意如果App接口不是https协议请在 AndroidManifest.xml 加入下面这段话
+```
+android:networkSecurityConfig="@xml/network_security_config"
+```
+app/src/main/res/xml 新建一个文件 network_security_config.xml 写入
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+ 
+    <base-config
+        cleartextTrafficPermitted="true"
+        tools:ignore="InsecureBaseConfiguration" />
+</network-security-config>
+```
