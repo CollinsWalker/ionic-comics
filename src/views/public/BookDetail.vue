@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ bookData.book_name }}</ion-title>
+        <ion-title>{{ route.query.name }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :scroll-y="chapterList.length > 0">
@@ -36,15 +36,16 @@
       </div>
       <!-- 章节列表 -->
       <div class="book-chapter">
-        <h2>章节列表</h2>
+        <h2 class="c-title">章节列表</h2>
         <ion-list v-if="chapterList.length > 0">
           <ion-item
+            class="c-item"
             v-for="item in chapterList"
             :key="item['id']"
             button
             @click="toChapterDetail(item)"
           >
-            <ion-label> {{ item['chapter_name'] }} </ion-label>
+            <ion-label class="item-title"> {{ item['chapter_name'] }} </ion-label>
           </ion-item>
         </ion-list>
         <ion-list v-else>
@@ -155,7 +156,6 @@
           id: route.query.id // 漫画id
         }
         let res = await getSwitchFavor(params)
-        console.log(res, '===')
         if (res.data.success === 1) {
           isfavor.value = res.data.isfavor
         } else {
@@ -266,7 +266,7 @@
       }
     }
     .b-info {
-      margin-left: 12px;
+      padding: 0 12px;
       .b-title {
         font-size: 18px;
         color: #161c41;
@@ -276,6 +276,28 @@
       }
       .b-desc {
         font-size: 12px;
+      }
+    }
+  }
+  .book-chapter {
+    .c-title {
+      padding-left: 12px;
+      font-size: 16px;
+      position: relative;
+      &::before {
+        height: 10px;
+        width: 2px;
+        position: absolute;
+        top: 1px;
+        left: 0;
+        background-color: #3880ff;
+      }
+    }
+    .c-item {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      .item-title {
+        font-size: 14px;
       }
     }
   }

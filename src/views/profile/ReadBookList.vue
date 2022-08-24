@@ -50,11 +50,11 @@
 
       const queryBookShelf = async () => {
         let res = await getBookShelf()
-        console.log(res, 'res')
         if (res.data.success === 1 && res.data.favors.length > 0) {
           bookList.value = res.data.favors
         } else {
           bookList.value = []
+          if (res.data.codeAuth === -1) isLogin.value = false
         }
       }
 
