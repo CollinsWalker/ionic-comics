@@ -7,6 +7,7 @@
   import { IonList, IonItem } from '@ionic/vue'
   import { home, heart, pin } from 'ionicons/icons'
   import { getBookShelf } from '@/utils/http/api'
+  import { storage } from '@/utils/storage'
 
   export default defineComponent({
     name: 'ProfilePage',
@@ -22,6 +23,8 @@
       const list = ref()
 
       const initData = async () => {
+        let utoken = storage.get('utoken') || ''
+        if (!utoken) return
         let res = await getBookShelf()
         console.log(res, 'res')
       }

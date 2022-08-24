@@ -5,7 +5,7 @@
         <!-- <ion-title>我的</ion-title> -->
         <ion-segment :value="tabValue" @ionChange="segmentChanged($event)">
           <ion-segment-button value="read"> 书架 </ion-segment-button>
-          <ion-segment-button value="favor"> 收藏 </ion-segment-button>
+          <ion-segment-button value="favor" disabled> 收藏 </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
     </ion-header>

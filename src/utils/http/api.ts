@@ -3,10 +3,6 @@ import { storage } from '@/utils/storage'
 // import { Md5 } from 'ts-md5/dist/md5'
 // import moment from 'moment'
 
-// const appKey = import.meta.env.VITE_APP_KEY
-// const time = Date.parse(moment().format('YYYY-MM-DD HH:mm:ss')) / 1000
-// const token = Md5.hashStr(appKey + time)
-
 // 获取本地用户信息
 const utoken = storage.get('utoken')
 
@@ -26,7 +22,7 @@ export const getUpdateBookList = (params: object) => {
 export const getBookDetail = (obj: { id: any }) => {
   const params = {
     id: obj.id, // 漫画id
-    utoken: utoken // 登录用户token
+    utoken: utoken || '' // 登录用户token
   }
   return http.post('/books/detail', params)
 }
@@ -83,7 +79,7 @@ export const getSearch = (params: object) => {
 export const getIsFavor = (obj: { id: any }) => {
   const params = {
     book_id: obj.id, // 漫画id
-    utoken: utoken // 登录用户token
+    utoken: utoken || '' // 登录用户token
   }
   return http.post('/users/isfavor', params)
 }
@@ -91,19 +87,14 @@ export const getIsFavor = (obj: { id: any }) => {
 export const getSwitchFavor = (obj: { id: any }) => {
   const params = {
     book_id: obj.id, // 漫画id
-    utoken: utoken // 登录用户token
+    utoken: utoken || '' // 登录用户token
   }
   return http.post('/users/switchfavor', params)
 }
 // 用户书架获取
 export const getBookShelf = () => {
   const params = {
-    utoken: utoken
+    utoken: utoken || ''
   }
   return http.post('/users/bookshelf', params)
 }
-// export const getTest = () => {
-//   return http.get(
-//     'http://hm-api.helloworlds.xyz/api/index.php?type=cartoon&filter=directory&bookid=198&page=0&line=20&orderby=asc'
-//   )
-// }

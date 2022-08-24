@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ route.query.name }}</ion-title>
+        <ion-title>{{ bookData.book_name }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :scroll-y="chapterList.length > 0">
@@ -22,7 +22,7 @@
             <ion-img :src="bookData['cover_url']"></ion-img>
           </ion-thumbnail>
           <!-- 收藏按钮 -->
-          <ion-fab class="c-fab" @click="switchFavor">
+          <ion-fab class="c-fab" @click="switchFavor" v-if="isLogin">
             <ion-fab-button :color="isfavor === 1 ? 'danger' : ''">
               <ion-icon :icon="isfavor === 0 ? heartOutline : heart"></ion-icon>
             </ion-fab-button>
@@ -87,6 +87,7 @@
   import { heartOutline, heart } from 'ionicons/icons'
   import { getBookDetail, getChapterList, getIsFavor, getSwitchFavor } from '@/utils/http/api'
   import ItemSkeletonText from '@/components/ItemSkeletonText.vue'
+  import { storage } from '@/utils/storage'
 
   export default defineComponent({
     name: 'About',
@@ -116,16 +117,15 @@
       const bookData = ref({})
       const chapterList = ref([])
       const isfavor = ref(0) // 当前用户是否收藏，1为已收藏
-
-      onIonViewDidEnter(() => {
-        console.log('Home page did enter')
-      })
+      const isLogin = ref(false)
 
       onIonViewWillEnter(() => {
+        let utoken = storage.get('utoken') || ''
         queryBookDetail()
-        queryIsFavor()
         queryChapterList()
-        console.log('Home page will enter')
+        // 如果用户没有登录则不调用查询是否收藏接口
+        if (utoken) queryIsFavor()
+        isLogin.value = utoken ? true : false
       })
 
       const queryBookDetail = async () => {
@@ -155,6 +155,7 @@
           id: route.query.id // 漫画id
         }
         let res = await getSwitchFavor(params)
+        console.log(res, '===')
         if (res.data.success === 1) {
           isfavor.value = res.data.isfavor
         } else {
@@ -196,7 +197,7 @@
               text: 'OK',
               role: 'confirm',
               handler: () => {
-                router.push('/login')
+                router.replace('/login')
               }
             }
           ]
@@ -207,7 +208,6 @@
 
       // 消息弹窗
       const toastShow = async (message: string) => {
-        
         const toast = await toastController.create({
           message,
           duration: 3000,
@@ -225,7 +225,8 @@
         toChapterDetail,
         heartOutline,
         heart,
-        switchFavor
+        switchFavor,
+        isLogin
       }
     }
   })

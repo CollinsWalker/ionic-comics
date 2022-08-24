@@ -73,7 +73,7 @@
           delete res.data.userInfo.password // 保存的数据去除密码
           storage.set('userInfo', res.data.userInfo)
           storage.set('utoken', res.data.userInfo.utoken)
-          router.go(-1)
+          router.replace('/profile')
         } else {
           toastShow(res.data.msg, 'danger')
         }

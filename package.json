@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "android": "vite build && npx cap sync android && npx cap open android",
+    "build:sit": "vite build --mode sit && npx cap sync android && npx cap open android",
+    "build:android": "vite build && npx cap sync android && npx cap open android",
     "android:release": "vite build && npx cap sync android && cd android && gradlew assembleRelease && npm run sign",
     "sign": "cd android/app/build/outputs/apk/release && jarsigner -keystore android/solamh.keystore -storepass 123456 app-release-unsigned.apk sola-h5 -signedjar android/app-release.apk"
   },
@@ -40,6 +41,7 @@
     "typescript": "^4.5.4",
     "vconsole": "^3.14.6",
     "vite": "^2.9.9",
+    "vite-plugin-vconsole": "^1.2.2",
     "vue-tsc": "^0.34.7"
   }
 }

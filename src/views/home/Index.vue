@@ -150,7 +150,6 @@
         queryNewBookList()
         queryTopList()
         queryHotList()
-        console.log(process.env.NODE_ENV, '环境')
       })
 
       return {

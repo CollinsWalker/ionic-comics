@@ -8,10 +8,9 @@
   import { IonApp, IonRouterOutlet, isPlatform, useBackButton, useIonRouter } from '@ionic/vue'
   import { App } from '@capacitor/app'
   import { StatusBar, Style } from '@capacitor/status-bar'
-  import Vconsole from 'vconsole'
   import { useRoute, useRouter } from 'vue-router'
   // 状态栏效果
-  if (process.env.NODE_ENV !== 'development') {
+  if (isPlatform('android')) {
     const setStatusBarStyleLight = async () => {
       // 状态栏主题
       await StatusBar.setStyle({ style: Style.Light })
@@ -38,8 +37,4 @@
   //     App.exitApp()
   //   }
   // })
-
-  if (process.env.NODE_ENV !== 'development' && isPlatform('android') && false) {
-    new Vconsole()
-  }
 </script>
