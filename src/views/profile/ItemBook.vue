@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import { IonItem, IonLabel, IonCard, IonThumbnail, IonCardSubtitle } from '@ionic/vue'
-  import { defineComponent, ref } from 'vue'
+  import { defineComponent, ref, toRefs } from 'vue'
   export default defineComponent({
     props: {
       itemData: Object
@@ -25,7 +25,7 @@
     },
     setup(props, { emit }) {
       const bookData = ref()
-      let { itemData } = props
+      let { itemData } = toRefs(props)
       bookData.value = itemData
 
       const toBookDetail = () => {

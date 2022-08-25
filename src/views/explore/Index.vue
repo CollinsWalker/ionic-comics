@@ -51,17 +51,23 @@
           </div>
         </div>
       </ion-card>
-      <ion-row v-if="bookList.length > 0">
+
+      <ion-row v-if="isloading">
+        <ion-col class="c-col" size="4" v-for="(item, index) in 10" :key="index">
+          <Item-skeleton-book></Item-skeleton-book>
+        </ion-col>
+      </ion-row>
+
+      <ion-row v-else="bookList.length > 0">
         <ion-col class="c-col" size="4" v-for="book in bookList" :key="book.id">
           <item-book :itemData="book" @navBook="toBookDetail"></item-book>
         </ion-col>
       </ion-row>
 
-      <ion-row v-else>
-        <ion-col class="c-col" size="4" v-for="(item, index) in 10" :key="index">
-          <Item-skeleton-book></Item-skeleton-book>
-        </ion-col>
-      </ion-row>
+      <div class="empty" v-if="!isloading && !bookList.length > 0">
+        <p>暂无数据</p>
+      </div>
+
       <ion-infinite-scroll
         @ionInfinite="loadData($event)"
         id="infinite-scroll"
@@ -124,13 +130,8 @@
       ItemSkeletonBook
     },
     setup() {
-      onMounted(() => {
-        queryTagList()
-        queryAreaList()
-        queryBookList()
-      })
-
       const isDisabled = ref(false)
+      const isloading = ref(true)
       const pageNum = ref(1)
       const pageSize = ref(12)
       const count = ref(0)
@@ -157,6 +158,12 @@
       ])
       const bookList = ref([])
 
+      onMounted(() => {
+        queryTagList()
+        queryAreaList()
+        queryBookList()
+      })
+
       // 获取分类
       const queryTagList = async () => {
         let res = await getTagList()
@@ -174,6 +181,7 @@
       }
       // 查询漫画
       const queryBookList = async () => {
+        isloading.value = true
         let params = {
           area: areaId.value, // 地区id,
           tag: tagName.value, // 分类名
@@ -189,13 +197,14 @@
             count.value = res.data.count
             // 判断如果最后一页小于定义的页数那么则禁止请求
             if (res.data.books.length < pageSize.value) isDisabled.value = true
+            isloading.value = false
           } else {
             bookList.value = []
-            return
+            isloading.value = false
           }
         } else {
           bookList.value = []
-          toastShow('暂无内容')
+          isloading.value = false
         }
       }
 
@@ -210,9 +219,22 @@
         }
       }
 
+      // 分类切换
       const onChangeTag = (name: string) => {
+        if (tagName.value === name) return
         pageNum.value = 1
         tagName.value = name
+        isFirst.value = true
+        bookList.value = []
+        isDisabled.value = false
+        queryBookList()
+      }
+
+      // 状态切换
+      const changeStatus = (value: number) => {
+        if (statusId.value === value) return
+        statusId.value = value
+        pageNum.value = 1
         isFirst.value = true
         bookList.value = []
         isDisabled.value = false
@@ -235,26 +257,6 @@
         })
       }
 
-      const changeStatus = (value: number) => {
-        statusId.value = value
-        pageNum.value = 1
-        isFirst.value = true
-        bookList.value = []
-        isDisabled.value = false
-        queryBookList()
-      }
-
-      // 消息弹窗
-      const toastShow = async (message: string) => {
-        const toast = await toastController.create({
-          message,
-          duration: 3000,
-          color: 'danger',
-          position: 'bottom'
-        })
-        return toast.present()
-      }
-
       return {
         tagName,
         areaId,
@@ -264,6 +266,7 @@
         bookList,
         statusList,
         isDisabled,
+        isloading,
         loadData,
         onChangeTag,
         toBookDetail,
@@ -296,6 +299,7 @@
           margin-right: 12px;
           &.active {
             color: #3880ff;
+            font-weight: 600;
           }
         }
       }
@@ -304,5 +308,13 @@
 
   .c-col {
     padding: 6px;
+  }
+
+  .empty {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

@@ -7,8 +7,7 @@ import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
-  console.log(command, 'command', mode)
-  console.log(env)
+  console.log('command', command, 'mode', mode)
   return {
     plugins: [
       vue(),
@@ -40,7 +39,7 @@ export default defineConfig(({ command, mode }) => {
           rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
-    },
+    }
     // build: {
     //   terserOptions: {
     //     compress: {
