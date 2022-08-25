@@ -12,10 +12,10 @@
     "sign": "cd android/app/build/outputs/apk/release && jarsigner -keystore android/solamh.keystore -storepass 123456 app-release-unsigned.apk sola-h5 -signedjar android/app-release.apk"
   },
   "dependencies": {
-    "@capacitor/android": "^3.6.0",
-    "@capacitor/app": "^1.1.1",
-    "@capacitor/core": "^3.6.0",
-    "@capacitor/status-bar": "^1.0.8",
+    "@capacitor/android": "4.0.1",
+    "@capacitor/app": "4.0.1",
+    "@capacitor/core": "4.0.1",
+    "@capacitor/status-bar": "4.0.1",
     "@ionic/core": "^6.1.13",
     "@ionic/vue": "^6.1.13",
     "@ionic/vue-router": "^6.1.13",
@@ -26,11 +26,12 @@
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
-    "@capacitor/cli": "^3.6.0",
+    "@capacitor/cli": "4.0.1",
     "@types/node": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@vitejs/plugin-vue": "^2.3.3",
+    "cordova-res": "0.15.4",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
