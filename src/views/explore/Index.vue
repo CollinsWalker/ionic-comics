@@ -135,8 +135,8 @@
       const pageSize = ref(12)
       const count = ref(0)
       const isFirst = ref(true)
-      const tagName = ref()
-      const areaId = ref(1)
+      const tagName = ref('全部')
+      const areaId = ref(-1)
       const statusId = ref(-1)
 
       const tagList = ref([])
@@ -157,21 +157,22 @@
       ])
       const bookList = ref([])
 
+      // 获取分类
       const queryTagList = async () => {
         let res = await getTagList()
         if (res.data.success === 1 && res.data.tags.length > 0) {
           tagList.value = res.data.tags
-          tagName.value = res.data.tags[0].tag_name
         }
       }
 
+      // 获取地区
       const queryAreaList = async () => {
         let res = await getAreaList()
         if (res.data.success === 1 && res.data.areas.length > 0) {
           areaList.value = res.data.areas
         }
       }
-
+      // 查询漫画
       const queryBookList = async () => {
         let params = {
           area: areaId.value, // 地区id,
