@@ -15,6 +15,7 @@
     "@capacitor/android": "4.0.1",
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "4.0.1",
+    "@capacitor/splash-screen": "^4.0.1",
     "@capacitor/status-bar": "4.0.1",
     "@ionic/core": "^6.1.13",
     "@ionic/vue": "^6.1.13",
