@@ -7,7 +7,8 @@ import * as path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
-  console.log(command, 'command')
+  console.log(command, 'command', mode)
+  console.log(env)
   return {
     plugins: [
       vue(),

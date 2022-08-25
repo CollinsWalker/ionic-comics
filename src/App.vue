@@ -9,6 +9,7 @@
   import { App } from '@capacitor/app'
   import { StatusBar, Style } from '@capacitor/status-bar'
   import { useRoute, useRouter } from 'vue-router'
+
   // 状态栏效果
   if (isPlatform('android')) {
     const setStatusBarStyleLight = async () => {
