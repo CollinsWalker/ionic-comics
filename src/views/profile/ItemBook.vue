@@ -26,10 +26,10 @@
     setup(props, { emit }) {
       const bookData = ref()
       let { itemData } = toRefs(props)
-      bookData.value = itemData
+      bookData.value = itemData.value
 
       const toBookDetail = () => {
-        emit('navBook', itemData)
+        emit('navBook', itemData.value)
       }
       return {
         bookData,

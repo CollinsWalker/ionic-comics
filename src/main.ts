@@ -2,6 +2,7 @@ import { IonicVue } from '@ionic/vue'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css'
@@ -28,6 +29,7 @@ const config: Record<string, unknown> = {}
 const app = createApp(App)
 app.use(IonicVue, config)
 app.use(router)
+app.use(store)
 
 router
   .isReady()

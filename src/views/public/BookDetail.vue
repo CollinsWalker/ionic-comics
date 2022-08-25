@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ route.query.name }}</ion-title>
+        <ion-title>{{ route.query.name || bookData['book_name'] }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :scroll-y="chapterList.length > 0">

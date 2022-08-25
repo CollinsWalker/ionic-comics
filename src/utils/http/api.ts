@@ -71,7 +71,7 @@ export const registerUser = (params: object) => {
 export const logoutrUser = () => {
   return http.post('/account/logout')
 }
-// 用户注销
+// 搜索
 export const getSearch = (params: object) => {
   return http.post('/books/search', params)
 }
