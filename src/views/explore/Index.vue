@@ -181,7 +181,6 @@
       }
       // 查询漫画
       const queryBookList = async () => {
-        isloading.value = true
         let params = {
           area: areaId.value, // 地区id,
           tag: tagName.value, // 分类名
@@ -222,6 +221,7 @@
       // 分类切换
       const onChangeTag = (name: string) => {
         if (tagName.value === name) return
+        isloading.value = true
         pageNum.value = 1
         tagName.value = name
         isFirst.value = true
@@ -233,6 +233,7 @@
       // 状态切换
       const changeStatus = (value: number) => {
         if (statusId.value === value) return
+        isloading.value = true
         statusId.value = value
         pageNum.value = 1
         isFirst.value = true
