@@ -109,11 +109,6 @@
           query: { id: obj.id, name: obj.book_name }
         })
       }
-      // 数据去重
-      // const deduplication = (arr: any[]) => {
-      //   const res = new Map()
-      //   return arr.filter((arr: { id: any }) => !res.has(arr.id) && res.set(arr.id, arr.id))
-      // }
       // 新番榜
       const queryNewBookList = async () => {
         let res = await getNewBookList()
@@ -158,7 +153,6 @@
         hotList,
         toBookDetail,
         doRefresh
-        // loadData
       }
     }
   })
