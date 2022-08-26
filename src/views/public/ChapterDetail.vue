@@ -8,30 +8,31 @@
         <ion-title>{{ chapterName || route.query.name }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="c-content">
+    <ion-content class="c-content" :scroll-y="true">
       <ion-list class="c-list">
         <ion-item v-for="item in chapterPicList" :key="item.id" lines="none">
           <ion-thumbnail class="c-thumbnail">
-            <ion-img :src="item.img_url" alt="暂无图片" @ionImgDidLoad="onLoadPicture"></ion-img>
+            <ion-img :src="item.img_url" alt="暂无图片"></ion-img>
           </ion-thumbnail>
         </ion-item>
       </ion-list>
-      <!-- <div class="c-pic">
-        <div v-for="item in chapterPicList" :key="item.id">
-          <ion-thumbnail class="c-thumbnail">
-            <ion-img :src="item.img_url" alt="暂无图片" @ionImgDidLoad="onLoadPicture"></ion-img>
-          </ion-thumbnail>
-        </div>
-      </div> -->
+      <ion-infinite-scroll
+        @ionInfinite="loadData($event)"
+        id="infinite-scroll"
+        :disabled="isDisabled"
+      >
+        <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="加载数据...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <div class="c-btn">
+        <ion-button color="primary" @click="onChangeChapter('prev')" v-if="prev !== -1"
+          >上一章</ion-button
+        >
+        <ion-button color="primary" @click="onChangeChapter('next')" v-if="next !== -1"
+          >下一章</ion-button
+        >
+      </div>
     </ion-content>
-    <div class="c-btn">
-      <ion-button color="primary" @click="onChangeChapter('prev')" v-if="prev !== -1"
-        >上一章</ion-button
-      >
-      <ion-button color="primary" @click="onChangeChapter('next')" v-if="next !== -1"
-        >下一章</ion-button
-      >
-    </div>
   </ion-page>
 </template>
 
@@ -49,13 +50,17 @@
     IonList,
     IonItem,
     IonThumbnail,
-    IonImg
+    IonImg,
+    InfiniteScrollCustomEvent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent
   } from '@ionic/vue'
   import { useRoute } from 'vue-router'
   import { getChapterDetail } from '@/utils/http/api'
+  // import ItemImage from '@/components/ItemImage.vue'
 
   export default defineComponent({
-    name: 'About',
+    name: 'ChapterDetail',
     components: {
       IonPage,
       IonHeader,
@@ -68,7 +73,10 @@
       IonList,
       IonItem,
       IonThumbnail,
-      IonImg
+      IonImg,
+      IonInfiniteScroll,
+      IonInfiniteScrollContent
+      // ItemImage
     },
     setup() {
       const route = useRoute()
@@ -78,6 +86,14 @@
       const chapterName = ref() // 章节信息
       const next = ref()
       const prev = ref()
+
+      const pageNum = ref(0)
+      const pageSize = ref(3)
+      const totalPage = ref(0)
+      const total = ref(0)
+      const isDisabled = ref(false)
+      const isFirst = ref(true)
+      const pics = ref()
 
       onMounted(() => {
         querygetChapterDetail()
@@ -92,18 +108,38 @@
           chapterName.value = res.data.chapter.chapter_name
           next.value = res.data.next || -1
           prev.value = res.data.prev || -1
-          chapterPicList.value = res.data.pics.reverse()
-          console.log(chapterPicList.value, '===')
+          let list = res.data.pics.reverse()
+          pics.value = list
+          totalPage.value = Math.ceil(list.length / pageSize.value) || 1
+          console.log(pics.value, '===', pics.value.length)
+          chapterPicList.value = list.splice(pageNum.value, pageSize.value)
         }
       }
 
       const onChangeChapter = (type: string) => {
+        document.documentElement.scrollTop = 0
         chapterId.value = type === 'next' ? next.value : prev.value
         querygetChapterDetail()
       }
 
-      const onLoadPicture = () => {
-        console.log('图像完成加载')
+      const dealData = (data: any) => {
+        console.log(pics.value, '===')
+        let list = data.splice(pageNum.value, pageSize.value)
+        chapterPicList.value = chapterPicList.value.concat(list)
+        console.log(chapterPicList.value, '===')
+      }
+
+      const loadData = async (ev: InfiniteScrollCustomEvent) => {
+        pageNum.value = pageNum.value += pageSize.value
+        console.log(pageNum.value, 'pageNum')
+        // isFirst.value = false
+        dealData(pics.value)
+
+        ev.target.complete()
+
+        if (pageNum.value >= totalPage.value) {
+          ev.target.disabled = true
+        }
       }
 
       return {
@@ -113,7 +149,8 @@
         chapterName,
         next,
         prev,
-        onLoadPicture
+        isDisabled,
+        loadData
       }
     }
   })
