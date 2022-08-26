@@ -18,7 +18,7 @@
           <div class="c-list">
             <span
               :class="tagName !== item.tag_name ? 't-item' : 't-item active'"
-              v-for="item in tagList"
+              v-for="item in sortList.tagList"
               :key="item"
               @click="onChangeTag(item.tag_name)"
               >{{ item.tag_name }}</span
@@ -31,7 +31,7 @@
           <div class="c-list">
             <span
               :class="areaId !== item.id ? 't-item' : 't-item active'"
-              v-for="item in areaList"
+              v-for="item in sortList.areaList"
               :key="item"
               >{{ item.area_name }}</span
             >
@@ -42,11 +42,11 @@
           <span class="tag-title">状态:</span>
           <div class="c-list">
             <span
-              :class="statusId !== item.value ? 't-item' : 't-item active'"
-              v-for="item in statusList"
-              :key="item.value"
-              @click="changeStatus(item.value)"
-              >{{ item.label }}</span
+              v-for="item in sortList.statusList"
+              :class="statusId !== item.id ? 't-item' : 't-item active'"
+              :key="item.id"
+              @click="changeStatus(item.id)"
+              >{{ item.status_name }}</span
             >
           </div>
         </div>
@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, ref } from 'vue'
+  import { defineComponent, onMounted, reactive, ref } from 'vue'
   import {
     IonPage,
     IonHeader,
@@ -140,23 +140,27 @@
       const areaId = ref(-1)
       const statusId = ref(-1)
 
-      const tagList = ref([])
-      const areaList = ref([])
-      const statusList = ref([
-        {
-          label: '全部',
-          value: -1
-        },
-        {
-          label: '连载',
-          value: 0
-        },
-        {
-          label: '完结',
-          value: 1
-        }
-      ])
       const bookList = ref([])
+
+      // 分类
+      const sortList = reactive({
+        tagList: [{ tag_name: '全部', id: -1 }],
+        areaList: [{ area_name: '全部', id: -1 }],
+        statusList: [
+          {
+            status_name: '全部',
+            id: -1
+          },
+          {
+            status_name: '连载',
+            id: 0
+          },
+          {
+            status_name: '完结',
+            id: 1
+          }
+        ]
+      })
 
       onMounted(() => {
         queryTagList()
@@ -168,7 +172,7 @@
       const queryTagList = async () => {
         let res = await getTagList()
         if (res.data.success === 1 && res.data.tags.length > 0) {
-          tagList.value = res.data.tags
+          sortList.tagList.push(...res.data.tags)
         }
       }
 
@@ -176,7 +180,7 @@
       const queryAreaList = async () => {
         let res = await getAreaList()
         if (res.data.success === 1 && res.data.areas.length > 0) {
-          areaList.value = res.data.areas
+          sortList.areaList.push(...res.data.areas)
         }
       }
       // 查询漫画
@@ -262,10 +266,8 @@
         tagName,
         areaId,
         statusId,
-        tagList,
-        areaList,
+        sortList,
         bookList,
-        statusList,
         isDisabled,
         isloading,
         loadData,

@@ -1,5 +1,18 @@
 # Vue 3 + TypeScript + Vite + Ionic
 
+             ┏┓      ┏┓
+            ┏┛┻━━━━━━┛┻┓
+            ┃               ☃           ┃
+            ┃  ┳┛   ┗┳ ┃
+            ┃     ┻    ┃
+            ┗━┓      ┏━┛
+              ┃      ┗━━━━━┓
+              ┃  神兽保佑     ┣┓
+              ┃ 永无BUG！     ┏┛
+              ┗┓┓┏━┳┓┏━━━━━┛
+               ┃┫┫ ┃┫┫
+               ┗┻┛ ┗┻┛
+
 **确保电脑有 nodejs 和 java 环境**
 
 java 环境建议百度: "cordova 打包环境配置"
@@ -54,21 +67,25 @@ npm run build:release
 npm run android:release
 ```
 
-如果打包界面有问题可以选择，此命令打包成debug版本
+如果打包界面有问题可以选择，此命令打包成 debug 版本
+
 ```
 npm run build:sit
 ```
 
-### 注意如果App接口不是https协议请在 AndroidManifest.xml 加入下面这段话
+### 注意如果 App 接口不是 https 协议请在 AndroidManifest.xml 加入下面这段话
+
 ```
 android:networkSecurityConfig="@xml/network_security_config"
 ```
+
 app/src/main/res/xml 新建一个文件 network_security_config.xml 写入
+
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
- 
+
     <base-config
         cleartextTrafficPermitted="true"
         tools:ignore="InsecureBaseConfiguration" />
